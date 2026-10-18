@@ -1,0 +1,46 @@
+<section id="x-score" data-transition="fade" style="background:#f7f3fb;color:#1b0b2e;font-family:'Nunito', Verdana, sans-serif;padding:128px;display:flex;flex-direction:column;gap:16px">
+<div style="position:absolute;left:0;bottom:0;width:1920px;height:20px;background:linear-gradient(90deg, #ff4fd8 0%, #a66bff 25%, #36e0ff 50%, #7cffb2 75%, #fff27a 100%)"></div>
+<p style="font-family:'Press Start 2P', 'Courier New', monospace;font-size:24px;color:#b0127f">STEP 4 · THE ARROWS</p>
+<h2 style="font-size:56px;font-weight:800;line-height:1.15;color:#1b0b2e">The score: cosines, clamped and averaged</h2>
+<div style="display:flex;flex-direction:row;gap:64px;align-items:start">
+<div style="width:960px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:6px;background:#ece4f6;padding:22px 26px;border-radius:14px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.55;color:#1b0b2e">cos θ_b = u_b · v_b  <span style="color:#7a6a96">v = the coach</span></p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.55;color:#1b0b2e">s_b = clamp((70° − θ_b) / 50°, 0, 1)</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.55;color:#1b0b2e">S = Σ_b w_b·s_b / Σ_b w_b  <span style="color:#7a6a96">seen bones only</span></p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.55;color:#b0127f">rating = max S(t),  t ∈ [T − 0.2 s, T + 0.5 s]</p>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63"><b><span style="color:#1b0b2e">Weights w:</span></b> upper arm 1, forearm 0.8, torso 0.6, thigh 0.5, shin 0.4. Legs count only in moves that use them.</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63"><b><span style="color:#1b0b2e">The window</span></b> reaches further late than early: players see the move, then copy it. It never overlaps the next move’s window.</p>
+<table style="font-family:'Nunito', Verdana, sans-serif;font-size:26px;color:#1b0b2e">
+<tr style="background:#1b0b2e"><th style="width:28%;color:#f7f3fb;text-align:left">Rating</th><th style="width:24%;color:#f7f3fb;text-align:left">best S</th><th style="width:48%;color:#f7f3fb;text-align:left">Points</th></tr>
+<tr style="background:#fffdfc"><td><b>PERFECT</b></td><td>≥ 0.85</td><td>1000</td></tr>
+<tr style="background:#f1eaf8"><td><b>GOOD</b></td><td>≥ 0.70</td><td>650</td></tr>
+<tr style="background:#fffdfc"><td><b>OK</b></td><td>≥ 0.50</td><td>300, then × (1 + 0.05·min(combo, 10)), × 2 on gold</td></tr>
+</table>
+</div>
+<div style="position:relative;width:640px;height:440px">
+<svg aria-label="Bone score s against the angle theta: 1 up to 20 degrees, then a straight line down to 0 at 70 degrees. Dashed lines mark the rating thresholds 0.85, 0.70 and 0.50, reached by a single bone at 27.5, 35 and 45 degrees." width="640" height="440" viewBox="0 0 640 440" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="640" height="440" rx="20" fill="#fffdfc"/>
+<line x1="70" y1="360" x2="620" y2="360" stroke="#4a3d63" stroke-width="3"/>
+<line x1="70" y1="360" x2="70" y2="40" stroke="#4a3d63" stroke-width="3"/>
+<line x1="70" y1="105" x2="235" y2="105" stroke="#0a7a3e" stroke-width="3" stroke-dasharray="9 8"/>
+<line x1="70" y1="150" x2="280" y2="150" stroke="#8a6d00" stroke-width="3" stroke-dasharray="9 8"/>
+<line x1="70" y1="210" x2="340" y2="210" stroke="#0a6f8c" stroke-width="3" stroke-dasharray="9 8"/>
+<polyline fill="none" stroke="#b0127f" stroke-width="7" stroke-linejoin="round" points="70,60 190,60 490,360 610,360"/>
+<circle cx="235" cy="105" r="8" fill="#0a7a3e"/>
+<circle cx="280" cy="150" r="8" fill="#8a6d00"/>
+<circle cx="340" cy="210" r="8" fill="#0a6f8c"/>
+</svg>
+<p style="position:absolute;left:250px;top:76px;width:300px;font-size:24px;font-weight:700;color:#0a7a3e">PERFECT · 27.5°</p>
+<p style="position:absolute;left:296px;top:120px;width:300px;font-size:24px;font-weight:700;color:#8a6d00">GOOD · 35°</p>
+<p style="position:absolute;left:356px;top:180px;width:260px;font-size:24px;font-weight:700;color:#0a6f8c">OK · 45°</p>
+<p style="position:absolute;left:20px;top:44px;width:44px;font-size:24px;font-weight:700;color:#4a3d63;text-align:right">1</p>
+<p style="position:absolute;left:20px;top:344px;width:44px;font-size:24px;font-weight:700;color:#4a3d63;text-align:right">0</p>
+<p style="position:absolute;left:160px;top:370px;width:60px;font-size:24px;color:#4a3d63;text-align:center">20°</p>
+<p style="position:absolute;left:460px;top:370px;width:60px;font-size:24px;color:#4a3d63;text-align:center">70°</p>
+<p style="position:absolute;left:250px;top:400px;width:370px;font-size:24px;color:#4a3d63;text-align:right">bone score s against angle θ</p>
+</div>
+</div>
+<aside>The comparison itself is elementary. For each bone, the cosine of the angle between the player’s direction u and the coach’s direction v is their dot product. The angle is mapped to a bone score that is 1 below 20 degrees, 0 beyond 70 degrees, and linear in between. The pose score S is the weighted mean over the bones the camera saw clearly; upper arms weigh most, shins least, because legs are often cut off by the frame and noisier. A move is judged on the best S inside a window from 0.2 seconds before its beat to 0.5 seconds after, because people react to what they see. On the chart, the dashed lines show the rating thresholds; for a single bone they are reached at 27.5, 35 and 45 degrees. The game’s tests check that a perfect copy of the coach gets five stars, a clumsy one about one star, and that holding the previous move never earns a PERFECT on the next.</aside>
+</section>

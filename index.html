@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dance Fever</title>
+  <meta name="author" content="Bianco's Labs">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="layout">
+    <section id="stage">
+      <canvas id="game" tabindex="0" aria-label="Dance Fever game screen"></canvas>
+    </section>
+
+    <aside id="cam-panel">
+      <h2>CAMERA MIRROR</h2>
+      <div id="cam-wrap">
+        <video id="cam" playsinline muted></video>
+        <canvas id="cam-overlay"></canvas>
+        <span class="side-tag p1">P1</span>
+        <span class="side-tag p2">P2</span>
+      </div>
+      <p id="cam-status">Camera off</p>
+      <div class="prow" data-p="0">
+        <b class="ptag p1">P1</b>
+        <span class="meter" title="How well P1 follows the coach right now"></span>
+        <i class="pmode">-</i>
+      </div>
+      <div class="prow" data-p="1">
+        <b class="ptag p2">P2</b>
+        <span class="meter" title="How well P2 follows the coach right now"></span>
+        <i class="pmode">-</i>
+      </div>
+      <p class="legend">While dancing, each bone turns <b class="g">green</b> when it points the same way as the coach's, <b class="r">red</b> when it does not.</p>
+      <dl id="help">
+        <dt>Both hands up</dt><dd>join / OK</dd>
+        <dt>Left hand up</dt><dd>previous</dd>
+        <dt>Right hand up</dt><dd>next</dd>
+        <dt>Dance!</dt><dd>copy the coach like a mirror</dd>
+      </dl>
+      <p id="keys">P1 keys: A / D choose &middot; W OK<br>
+        P2 keys: &larr; / &rarr; choose &middot; &uarr; OK<br>
+        Enter go &middot; P pause &middot; M mute &middot; V hide panel &middot; Esc back</p>
+    </aside>
+  </main>
+
+  <div id="boot">
+    <div class="boot-card">
+      <h1>DANCE FEVER</h1>
+      <p>One or two dancers, side by side, 2 to 3 metres from the webcam.<br>Player 1 on the left, player 2 on the right.<br>Copy the glowing coach like a mirror!</p>
+      <button id="boot-btn" type="button">CLICK TO START</button>
+      <p class="small">The browser will ask to use your camera. Video never leaves this computer.</p>
+      <p class="small credit">Bianco's Labs</p>
+    </div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

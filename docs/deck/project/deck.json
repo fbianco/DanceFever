@@ -1,0 +1,19 @@
+{
+  "v": 4,
+  "createdOnFiles": { "v": 1, "at": "2026-10-18T08:30:00Z" },
+  "lists": "css",
+  "title": "Dance Fever: How a Camera Sees You Dance",
+  "order": ["cover", "k-dots", "k-find", "k-stickers", "k-connect", "k-arrows", "k-recap", "x-part2", "x-pipeline", "x-detector", "x-conv", "x-outputs", "x-training", "x-time", "x-bones", "x-score", "x-projection", "close"],
+  "sections": {
+    "intro": { "description": "What Dance Fever is and the question this deck answers", "start": "cover" },
+    "kids": { "description": "Part 1: how the camera turns a photo into a stick figure, told for dancers aged 6 to 10", "start": "k-dots" },
+    "maths": { "description": "Part 2: the same image-to-skeleton pipeline with its mathematics and physics", "start": "x-part2" },
+    "wrap": { "description": "The whole chain in one line, and how to try the game", "start": "close" }
+  },
+  "faces": {
+    "press-start-2p": { "family": "Press Start 2P", "href": "https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" },
+    "nunito": { "family": "Nunito", "href": "https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" },
+    "jetbrains-mono": { "family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" }
+  },
+  "designSystems": []
+}

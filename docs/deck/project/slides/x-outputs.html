@@ -1,0 +1,30 @@
+<section id="x-outputs" data-transition="fade" style="background:#f7f3fb;color:#1b0b2e;font-family:'Nunito', Verdana, sans-serif;padding:128px;display:flex;flex-direction:column;gap:16px">
+<div style="position:absolute;left:0;bottom:0;width:1920px;height:20px;background:linear-gradient(90deg, #ff4fd8 0%, #a66bff 25%, #36e0ff 50%, #7cffb2 75%, #fff27a 100%)"></div>
+<p style="font-family:'Press Start 2P', 'Courier New', monospace;font-size:24px;color:#b0127f">STEP 2 · THE STICKERS</p>
+<h2 style="font-size:56px;font-weight:800;line-height:1.15;color:#1b0b2e">What the landmark network returns</h2>
+<table style="font-family:'Nunito', Verdana, sans-serif;font-size:28px;color:#1b0b2e">
+<tr style="background:#1b0b2e"><th style="width:22%;color:#f7f3fb;text-align:left">Output</th><th style="width:20%;color:#f7f3fb;text-align:left">Shape</th><th style="width:58%;color:#f7f3fb;text-align:left">Meaning</th></tr>
+<tr style="background:#fffdfc"><td><b>Landmarks</b></td><td>39 × 5 = 195</td><td>per point: x, y in the crop, relative depth z, visibility and presence logits</td></tr>
+<tr style="background:#f1eaf8"><td><b>World landmarks</b></td><td>39 × 3 = 117</td><td>x, y, z in metres, origin between the hips</td></tr>
+<tr style="background:#fffdfc"><td><b>Heatmaps</b></td><td>64 × 64 × 39</td><td>one likelihood map per point</td></tr>
+<tr style="background:#f1eaf8"><td><b>Segmentation</b></td><td>256 × 256</td><td>which pixels of the crop belong to the person</td></tr>
+<tr style="background:#fffdfc"><td><b>Pose presence</b></td><td>1</td><td>is there still a person in the crop? (decides when to re-detect)</td></tr>
+</table>
+<div style="display:flex;flex-direction:row;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#ece4f6;padding:24px 28px;border-radius:16px">
+<p style="font-size:28px;font-weight:800;color:#1b0b2e">Back to the image</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;color:#1b0b2e">x_img = c + s·R(θ)·(x_crop/256 − ½)</p>
+<p style="font-size:26px;line-height:1.4;color:#4a3d63">the inverse of the alignment, then normalised to [0, 1]</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#ece4f6;padding:24px 28px;border-radius:16px">
+<p style="font-size:28px;font-weight:800;color:#1b0b2e">Visibility</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;color:#1b0b2e">v = σ(ℓ_v) ∈ (0, 1)</p>
+<p style="font-size:26px;line-height:1.4;color:#4a3d63">the game skips a bone when v &lt; 0.5 at either end</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#ece4f6;padding:24px 28px;border-radius:16px">
+<p style="font-size:28px;font-weight:800;color:#1b0b2e">Why 39?</p>
+<p style="font-size:26px;line-height:1.4;color:#4a3d63">33 body points + 6 auxiliary points; MediaPipe uses auxiliary points to place the next frame’s crop.</p>
+</div>
+</div>
+<aside>The landmark network has five outputs, with shapes read from the model file. The main one has 195 numbers: 39 points times 5 values. For each point, x and y in the 256 by 256 crop, a relative depth z, and two logits for visibility (is the point in view and not hidden?) and presence (is it inside the crop?). A second head gives the same points in metres in a body-centred frame. The 64 by 64 heatmaps are one likelihood map per point; they can be used to refine the regressed coordinates locally, like a soft argmax. There is also a person mask and a single presence score, which tells the tracker when it has lost the person and must call the detector again. MediaPipe maps the points back to the image with the inverse of the alignment transform, and the game receives x and y in [0,1] plus visibility. Of the 39 points, 33 are the familiar body landmarks; the extra auxiliary ones are used internally, notably to place the next crop.</aside>
+</section>

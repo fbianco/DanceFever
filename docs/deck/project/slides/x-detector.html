@@ -1,0 +1,46 @@
+<section id="x-detector" data-transition="fade" style="background:#f7f3fb;color:#1b0b2e;font-family:'Nunito', Verdana, sans-serif;padding:128px;display:flex;flex-direction:column;gap:16px">
+<div style="position:absolute;left:0;bottom:0;width:1920px;height:20px;background:linear-gradient(90deg, #ff4fd8 0%, #a66bff 25%, #36e0ff 50%, #7cffb2 75%, #fff27a 100%)"></div>
+<p style="font-family:'Press Start 2P', 'Courier New', monospace;font-size:24px;color:#b0127f">STEP 1 · FIND YOU</p>
+<h2 style="font-size:56px;font-weight:800;line-height:1.15;color:#1b0b2e">Detection: 2,254 anchors, then an alignment</h2>
+<div style="display:flex;flex-direction:row;gap:72px;align-items:start">
+<div style="position:relative;width:640px;height:640px">
+<svg aria-label="A grid of anchor points over a tilted stick figure. A circle of radius r around the hip centre c encloses the whole body; the angle theta between the vertical and the hip-to-shoulder line gives the tilt; a dashed square, rotated by theta, is the crop sent to the landmark network." width="640" height="640" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg">
+<defs><pattern id="anchors" x="0" y="0" width="45.7" height="45.7" patternUnits="userSpaceOnUse"><circle cx="22.85" cy="22.85" r="4" fill="#cdbfe0"/></pattern></defs>
+<rect x="0" y="0" width="640" height="640" rx="28" fill="#ece4f6"/>
+<rect x="0" y="0" width="640" height="640" rx="28" fill="url(#anchors)"/>
+<g transform="scale(0.9143) translate(52 40) scale(0.85)">
+<circle cx="350" cy="420" r="260" fill="none" stroke="#0a6f8c" stroke-width="5"/>
+<path d="M166.1 101.5 L668.5 236.1 L533.9 738.5 L31.5 603.9 Z" fill="none" stroke="#b0127f" stroke-width="6" stroke-dasharray="22 14"/>
+<g fill="none" stroke="#1b0b2e" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+<path d="M340.5 262.2 L437.1 288 L379 427.8 L321 412.2 Z"/>
+<path d="M340.5 262.2 L300 340 L280 420"/>
+<path d="M437.1 288 L480 360 L500 440"/>
+<path d="M321 412.2 L300 520 L290 620"/>
+<path d="M379 427.8 L395 530 L405 630"/>
+</g>
+<circle cx="408.2" cy="202.7" r="36" fill="#1b0b2e"/>
+<line x1="350" y1="420" x2="350" y2="180" stroke="#4a3d63" stroke-width="4" stroke-dasharray="12 10"/>
+<line x1="350" y1="420" x2="388.8" y2="275.1" stroke="#ff9f1c" stroke-width="7"/>
+<path d="M350 330 A90 90 0 0 1 373.3 333.1" fill="none" stroke="#ff9f1c" stroke-width="6"/>
+<line x1="350" y1="420" x2="90" y2="420" stroke="#0a6f8c" stroke-width="5"/>
+<circle cx="350" cy="420" r="12" fill="#ff9f1c" stroke="#1b0b2e" stroke-width="4"/>
+</g>
+</svg>
+<p style="position:absolute;left:334px;top:368px;width:60px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#1b0b2e">c</p>
+<p style="position:absolute;left:330px;top:236px;width:60px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#b85c00">θ</p>
+<p style="position:absolute;left:196px;top:316px;width:60px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#0a6f8c">r</p>
+<p style="position:absolute;left:356px;top:24px;width:270px;font-size:24px;font-weight:700;color:#b0127f;text-align:right">crop → 256 × 256</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">The whole frame, letterboxed to <b><span style="color:#1b0b2e">224 × 224</span></b>, goes through a convolutional network that scores <b><span style="color:#1b0b2e">2,254 anchors</span></b>: fixed reference boxes on 28 × 28, 14 × 14 and 7 × 7 grids (28²·2 + 14²·2 + 7²·6).</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">Each anchor regresses <b><span style="color:#1b0b2e">12 numbers</span></b> (a box and 4 keypoints) and one logit z, scored σ(z) = 1 / (1 + e^−z). Overlapping hits are merged by weighted non-maximum suppression.</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">The keypoints give the alignment (BlazePose): hip centre <b><span style="color:#1b0b2e">c</span></b>, a radius <b><span style="color:#0a6f8c">r</span></b> enclosing the body, and the tilt <b><span style="color:#b85c00">θ</span></b> of the hip-to-shoulder line.</p>
+<div style="display:flex;flex-direction:column;gap:8px;background:#ece4f6;padding:24px 28px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;line-height:1.5;color:#1b0b2e">p_img = c + s·R(θ)·(q − ½),  q ∈ [0,1]²,  s ∝ r</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;line-height:1.5;color:#1b0b2e">R(θ) = [cos θ, −sin θ ; sin θ, cos θ]</p>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">The crop is rotated so the dancer is always upright and centred: the landmark network never has to learn tilted bodies.</p>
+</div>
+</div>
+<aside>The detector is a single-shot detector in the SSD family. The frame is letterboxed to 224 by 224 and a convolutional network produces, for each of 2,254 anchors, 12 regression outputs and one classification logit; the shapes [1, 2254, 12] and [1, 2254, 1] are read from the model file. The count matches two anchors per cell on a 28 by 28 and a 14 by 14 feature map, plus six per cell on 7 by 7. The 12 numbers are a box and four keypoints. Following the BlazePose paper by Bazarevsky and colleagues, those keypoints encode an alignment: the midpoint of the hips, a circle radius enclosing the whole person, and the incline of the line from mid-hip to mid-shoulder. That gives a similarity transform from the unit square of the crop to the image. Everything downstream works in that normalised, upright frame, which is a big reason why a 1.4 million weight network is enough.</aside>
+</section>

@@ -1,0 +1,32 @@
+<section id="x-conv" data-transition="fade" style="background:#f7f3fb;color:#1b0b2e;font-family:'Nunito', Verdana, sans-serif;padding:128px;display:flex;flex-direction:column;gap:16px">
+<div style="position:absolute;left:0;bottom:0;width:1920px;height:20px;background:linear-gradient(90deg, #ff4fd8 0%, #a66bff 25%, #36e0ff 50%, #7cffb2 75%, #fff27a 100%)"></div>
+<p style="font-family:'Press Start 2P', 'Courier New', monospace;font-size:24px;color:#b0127f">STEP 2 · THE STICKERS</p>
+<h2 style="font-size:56px;font-weight:800;line-height:1.15;color:#1b0b2e">Inside both networks: stacked convolutions</h2>
+<div style="display:flex;flex-direction:row;gap:72px;align-items:start">
+<div style="width:860px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:30px;font-weight:800;color:#1b0b2e">One convolution layer</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;color:#1b0b2e;background:#ece4f6;padding:20px 24px;border-radius:14px">y[x,y,k] = b_k + Σ_c Σ_(i,j) K[i,j,c,k] · I[x+i, y+j, c]</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">The same small kernel K slides over the whole image (translation equivariance), followed by a pointwise nonlinearity. Early layers respond to edges, later ones to limbs.</p>
+<p style="font-size:30px;font-weight:800;color:#1b0b2e">Depthwise separable: the cheap version</p>
+<div style="display:flex;flex-direction:column;gap:6px;background:#ece4f6;padding:20px 24px;border-radius:14px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;color:#1b0b2e">full k×k: k²·C·C′ per pixel</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;color:#1b0b2e">depthwise k×k + 1×1: k²·C + C·C′</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;color:#b0127f">ratio = 1/C′ + 1/k² ≈ 1/9  (k = 3)</p>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">The landmark network is an encoder–decoder: resolution goes down, then back up (5 bilinear upsamplings, 25 residual additions) to 64 × 64 heatmaps.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<table style="font-family:'Nunito', Verdana, sans-serif;font-size:26px;color:#1b0b2e">
+<tr style="background:#1b0b2e"><th style="width:40%;color:#f7f3fb;text-align:left">Measured</th><th style="width:30%;color:#f7f3fb;text-align:left">Detector</th><th style="width:30%;color:#f7f3fb;text-align:left">Landmarks</th></tr>
+<tr style="background:#fffdfc"><td>Input</td><td>224×224×3</td><td>256×256×3</td></tr>
+<tr style="background:#f1eaf8"><td>Convolutions</td><td>45</td><td>54</td></tr>
+<tr style="background:#fffdfc"><td>Depthwise conv.</td><td>28</td><td>34</td></tr>
+<tr style="background:#f1eaf8"><td>Weights</td><td>3.0 M, ≈ 70 % zero (sparse)</td><td>1.36 M</td></tr>
+<tr style="background:#fffdfc"><td>Multiply-adds per run</td><td>0.43 G</td><td>0.20 G</td></tr>
+<tr style="background:#f1eaf8"><td>Stored as</td><td>float16, 1.8 MB</td><td>float16, 2.7 MB</td></tr>
+</table>
+<p style="font-size:24px;line-height:1.4;color:#4a3d63">Read from the two TFLite models inside pose_landmarker_lite.task (the file the game ships), by walking their FlatBuffers graph.</p>
+</div>
+</div>
+<aside>Both networks are stacks of convolutions. A convolution layer computes, for each output channel k and position (x, y), a weighted sum of a small k by k neighbourhood over all input channels, plus a bias, then a nonlinearity. The same weights are used at every position, which is why a network can find an elbow wherever it is in the crop. To save computation, MobileNet-style networks split a full convolution into a depthwise k by k filter per channel and a 1 by 1 pointwise mixing: the cost ratio is 1 over C prime plus 1 over k squared, roughly one ninth for 3 by 3 kernels. The table on the right is not from a paper: it was measured from the model file. The detector has about 3 million weights in dense form, but roughly 70 percent are zero and stored sparsely. The landmark network has 1.36 million weights and needs about 0.2 billion multiply-adds per run, which is why it runs in real time in a browser.</aside>
+</section>

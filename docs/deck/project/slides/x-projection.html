@@ -1,0 +1,35 @@
+<section id="x-projection" data-transition="fade" style="background:#f7f3fb;color:#1b0b2e;font-family:'Nunito', Verdana, sans-serif;padding:128px;display:flex;flex-direction:column;gap:16px">
+<div style="position:absolute;left:0;bottom:0;width:1920px;height:20px;background:linear-gradient(90deg, #ff4fd8 0%, #a66bff 25%, #36e0ff 50%, #7cffb2 75%, #fff27a 100%)"></div>
+<p style="font-family:'Press Start 2P', 'Courier New', monospace;font-size:24px;color:#b0127f">THE PHYSICS</p>
+<h2 style="font-size:56px;font-weight:800;line-height:1.15;color:#1b0b2e">What one camera cannot see</h2>
+<div style="display:flex;flex-direction:row;gap:72px;align-items:start">
+<div style="position:relative;width:640px;height:560px">
+<svg aria-label="Side view: a bone of length l tilted by the angle phi towards the camera projects onto the picture plane as a shorter segment of length l times cos phi; a vertical bone of the same length would project at full length" width="640" height="560" viewBox="0 0 640 560" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="640" height="560" rx="28" fill="#ece4f6"/>
+<line x1="120" y1="40" x2="120" y2="480" stroke="#0a6f8c" stroke-width="6"/>
+<line x1="440" y1="110" x2="440" y2="410" stroke="#a99cc0" stroke-width="10" stroke-linecap="round" stroke-dasharray="4 16"/>
+<line x1="440" y1="110" x2="120" y2="110" stroke="#4a3d63" stroke-width="3" stroke-dasharray="10 9"/>
+<line x1="194.3" y1="282.1" x2="120" y2="282.1" stroke="#4a3d63" stroke-width="3" stroke-dasharray="10 9"/>
+<line x1="440" y1="410" x2="120" y2="410" stroke="#a99cc0" stroke-width="3" stroke-dasharray="10 9"/>
+<line x1="120" y1="110" x2="120" y2="282.1" stroke="#b0127f" stroke-width="14" stroke-linecap="round"/>
+<line x1="440" y1="110" x2="194.3" y2="282.1" stroke="#1b0b2e" stroke-width="14" stroke-linecap="round"/>
+<path d="M440 180 A70 70 0 0 1 382.7 150.2" fill="none" stroke="#ff9f1c" stroke-width="6"/>
+<circle cx="440" cy="110" r="14" fill="#1b0b2e"/>
+<circle cx="194.3" cy="282.1" r="14" fill="#1b0b2e"/>
+</svg>
+<p style="position:absolute;left:300px;top:206px;width:60px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#1b0b2e">ℓ</p>
+<p style="position:absolute;left:400px;top:176px;width:60px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#b85c00">φ</p>
+<p style="position:absolute;left:8px;top:176px;width:110px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:600;color:#b0127f">ℓ·cos φ</p>
+<p style="position:absolute;left:460px;top:250px;width:170px;font-size:24px;color:#4a3d63">same bone, upright</p>
+<p style="position:absolute;left:40px;top:496px;width:560px;font-size:24px;font-weight:700;color:#0a6f8c">picture plane (camera on the left)</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:22px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;line-height:1.5;color:#1b0b2e;background:#ece4f6;padding:20px 24px;border-radius:14px">pinhole: (X, Y, Z) ↦ f·(X/Z, Y/Z)</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">A bone of length ℓ tilted by φ out of the picture plane looks <b><span style="color:#b0127f">ℓ·cos φ</span></b> long (subject far away: ΔZ ≪ Z).</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">With landmark noise σ, its direction wobbles by <b><span style="color:#1b0b2e">δa ≈ √2·σ / (ℓ·cos φ)</span></b>, which diverges as φ → 90°: a bone pointing at the camera has no 2D direction.</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63"><b><span style="color:#1b0b2e">So in Dance Fever:</span></b> moves live in the picture plane (a sideways “flamingo” knee, not a forward knee lift), legs weigh less, and the network’s depth z is not used.</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63"><b><span style="color:#1b0b2e">A test keeps moves apart:</span></b> holding move i scores below 0.85 on move i + 1, for every consecutive pair in all three dances.</p>
+</div>
+</div>
+<aside>The camera is a projection from three dimensions to two. Seen from the side, a bone of length l tilted by phi out of the picture plane shows up with length l cos phi, for a subject far from the camera compared to its depth. That costs more than length: if each landmark has a positional noise sigma, the measured direction of the bone has an angular error of about root two sigma over l cos phi, which blows up as the bone points at the camera. A forearm pointing straight at the lens has no meaningful direction in the image. This is why the choreographies were designed in the picture plane: the knee lift is done sideways, as a flamingo, not forwards; why legs have lower weights; and why the game does not rely on the network’s estimated depth z, which is inferred from a single image and is much noisier than x and y. An automated test also checks that no two consecutive moves are so similar that holding one would score PERFECT on the next; it caught a real design bug during development.</aside>
+</section>

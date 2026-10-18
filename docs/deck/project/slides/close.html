@@ -1,0 +1,16 @@
+<section id="close" data-transition="fade" style="background:linear-gradient(160deg, #2a1452 0%, #1e0e34 60%);color:#fbf6ff;font-family:'Nunito', Verdana, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="position:absolute;left:0;bottom:0;width:1920px;height:20px;background:linear-gradient(90deg, #ff4fd8 0%, #a66bff 25%, #36e0ff 50%, #7cffb2 75%, #fff27a 100%)"></div>
+<h2 style="font-family:'Press Start 2P', 'Courier New', monospace;font-size:48px;font-weight:400;line-height:1.3;color:#fff27a">THE WHOLE CHAIN</h2>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;line-height:1.6;color:#fbf6ff;background:#2d1150;padding:28px 36px;border-radius:20px;border-left:10px solid #ff4fd8">pixels → detector (c, r, θ) → upright crop → 33 points (x, y, v) → low-pass → 9 directions on T⁹ → cosines → <span style="color:#fff27a">PERFECT!</span></p>
+<div style="display:flex;flex-direction:row;gap:72px;align-items:center">
+<div style="flex:1;display:flex;flex-direction:column;gap:22px">
+<h3 style="font-size:40px;font-weight:800;color:#ff4fd8">Try it</h3>
+<p style="font-size:32px;line-height:1.4;color:#fbf6ff">Double-click <b>start.bat</b>, allow the camera, raise both hands to join.</p>
+<p style="font-size:32px;line-height:1.4;color:#d9ccef">No webcam? <b><span style="color:#fbf6ff">localhost:8080/?demo</span></b> shows two AUTO dancers.</p>
+<p style="font-size:32px;line-height:1.4;color:#d9ccef"><b><span style="color:#fbf6ff">npm test</span></b> runs the 23 tests: geometry, judging, menus, whole dances.</p>
+</div>
+<img src="/_blob/9b57eb3f2ad3348a94ace0c1fbbd5cfb" alt="Dance Fever song choice: Sugar Disco (easy), Robo Boogie (medium) and Starlight Pop (hard), each previewed by a glowing coach" style="width:720px;height:405px;object-fit:cover;border-radius:20px;border:5px solid #fbf6ff">
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#a998c9">Body tracking: Google MediaPipe Pose Landmarker lite (Apache-2.0) · V. Bazarevsky et al., “BlazePose: On-device Real-time Body Pose tracking”, 2020 · Dance Fever by Bianco’s Labs</p>
+<aside>Here is the whole chain in one line. Pixels go into a detector that finds the dancer and an alignment; the aligned crop goes into the landmark network, which gives 33 points with a visibility; the game smooths them, turns them into nine directions, compares them with the coach using cosines, and turns the best match around each beat into PERFECT, GOOD, OK or MISS. For the children: photo, find you, stickers, stick figure, arrows. To try it, double-click start.bat in the DanceFever folder, allow the camera and raise both hands. Without a webcam, the demo address shows two automatic dancers. The automated tests can be run with npm test.</aside>
+</section>

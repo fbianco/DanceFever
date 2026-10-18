@@ -1,0 +1,5 @@
+# Published with the game (deploy.ps1). Apache does not always know these
+# types; a module script (.mjs) served with the wrong type is refused.
+AddType text/javascript .js .mjs
+AddType application/wasm .wasm
+AddType application/octet-stream .task

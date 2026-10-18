@@ -1,0 +1,24 @@
+<section id="x-training" data-transition="fade" style="background:#f7f3fb;color:#1b0b2e;font-family:'Nunito', Verdana, sans-serif;padding:128px;display:flex;flex-direction:column;gap:16px">
+<div style="position:absolute;left:0;bottom:0;width:1920px;height:20px;background:linear-gradient(90deg, #ff4fd8 0%, #a66bff 25%, #36e0ff 50%, #7cffb2 75%, #fff27a 100%)"></div>
+<p style="font-family:'Press Start 2P', 'Courier New', monospace;font-size:24px;color:#b0127f">STEP 2 · HOW IT LEARNED</p>
+<h2 style="font-size:56px;font-weight:800;line-height:1.15;color:#1b0b2e">Training: fit 1.36 M numbers to labelled photos</h2>
+<div style="display:flex;flex-direction:row;gap:32px;align-items:start">
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#fffdfc;padding:32px;border:3px solid #e3d8f0;border-top:8px solid #a66bff;border-radius:18px">
+<h3 style="font-size:34px;font-weight:800;color:#1b0b2e">Data</h3>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">Photos with hand-labelled points y_n ∈ ℝ^(33×2): many people, poses, clothes and lights.</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">Random rectangles are painted over parts of the photos, so the network also learns to say “not visible”.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#fffdfc;padding:32px;border:3px solid #e3d8f0;border-top:8px solid #ff4fd8;border-radius:18px">
+<h3 style="font-size:34px;font-weight:800;color:#1b0b2e">Loss</h3>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;color:#1b0b2e">L(θ) = Σ_n Σ_k ‖f_θ(I_n)_k − y_n,k‖² + λ·L_heat</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">Heatmap targets are Gaussian blobs exp(−‖q − y_k‖² / 2σ²): they teach “roughly where”, the regression “exactly where”.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#fffdfc;padding:32px;border:3px solid #e3d8f0;border-top:8px solid #36e0ff;border-radius:18px">
+<h3 style="font-size:34px;font-weight:800;color:#1b0b2e">Optimiser</h3>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;color:#1b0b2e">θ ← θ − η ∇_θ L</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">Stochastic gradient descent on mini-batches; the gradient comes from back-propagation, the chain rule applied layer by layer.</p>
+</div>
+</div>
+<p style="font-size:32px;font-weight:700;line-height:1.4;color:#1b0b2e;background:#ece4f6;padding:28px 32px;border-radius:16px">Training happened once, at Google (Bazarevsky et al., <i>BlazePose</i>, 2020). The game only runs the forward pass: fixed weights, about 0.2 G multiply-adds per frame and person.</p>
+<aside>Where do the 1.36 million weights come from? Supervised learning. Google collected photos and had people label the points by hand. The BlazePose paper describes training with a combination of heatmap supervision and direct coordinate regression: Gaussian heatmaps are easy to learn and give a coarse location, the regression head gives exact coordinates. To teach the visibility output, they simulate occlusions by painting random rectangles over the images. The parameters are then found by minimising the loss with stochastic gradient descent, using back-propagation to compute the gradient. Nothing of this happens in the game: Dance Fever ships the trained model and only evaluates it, which is a fixed function of about 0.2 billion multiply-adds per frame.</aside>
+</section>

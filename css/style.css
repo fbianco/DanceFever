@@ -1,0 +1,220 @@
+:root {
+  --bg: #12051f;
+  --line: rgba(191, 239, 255, 0.35);
+  --cyan: #bfefff;
+  --pink: #ff4fd8;
+  --blue: #36e0ff;
+  --yellow: #fff27a;
+  --green: #7cffb2;
+  --text: #fbf6ff;
+  --pixel: "Press Start 2P", "Courier New", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, "Segoe UI", sans-serif;
+  overflow: hidden;
+}
+
+#layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+#stage {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game {
+  display: block;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(255, 79, 216, 0.35);
+  cursor: pointer;
+}
+
+#cam-panel {
+  width: 320px;
+  flex: none;
+  background: linear-gradient(180deg, #2d1150, #12051f);
+  border-left: 3px solid;
+  border-image: linear-gradient(#ff4fd8, #a66bff, #36e0ff, #7cffb2, #fff27a) 1;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+#cam-panel.collapsed { display: none; }
+
+#cam-panel h2 {
+  font: 12px var(--pixel);
+  color: var(--pink);
+  margin: 4px 0 0;
+  letter-spacing: 1px;
+}
+
+#cam-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid var(--line);
+}
+
+#cam, #cam-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* mirror: raise your left arm, see the arm on the left go up */
+}
+
+.side-tag {
+  position: absolute;
+  top: 6px;
+  font: 9px var(--pixel);
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: #12051f;
+}
+.side-tag.p1 { left: 6px; background: var(--pink); }
+.side-tag.p2 { right: 6px; background: var(--blue); }
+
+#cam-panel.no-cam #cam-wrap { opacity: 0.35; }
+
+#cam-status {
+  margin: 0;
+  font: 9px/1.6 var(--pixel);
+  color: var(--cyan);
+  min-height: 2.4em;
+}
+#cam-status.ok { color: var(--green); }
+#cam-status.err { color: #ff9fd0; }
+
+.prow {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 4px 8px;
+  align-items: center;
+}
+.ptag {
+  font: 9px var(--pixel);
+  color: #12051f;
+  border-radius: 6px;
+  padding: 6px 0;
+  text-align: center;
+}
+.ptag.p1 { background: var(--pink); }
+.ptag.p2 { background: var(--blue); }
+.meter {
+  --fill: 0%;
+  --col: #7cffb2;
+  height: 16px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(90deg, var(--col) var(--fill), transparent var(--fill));
+}
+.pmode {
+  grid-column: 2;
+  font-style: normal;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.legend {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+}
+.legend .g { color: #5dff8a; }
+.legend .r { color: #ff5d6c; }
+
+#help {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 10px;
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+#help dt { color: var(--cyan); }
+#help dd { margin: 0; color: var(--text); }
+
+#keys {
+  margin: auto 0 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+}
+
+/* ---- boot overlay ---- */
+#boot {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 40%, rgba(110, 30, 150, 0.92), rgba(14, 4, 30, 0.97));
+  z-index: 10;
+}
+#boot.hidden { display: none; }
+
+.boot-card {
+  text-align: center;
+  max-width: 640px;
+  padding: 32px;
+}
+.boot-card h1 {
+  font: 46px var(--pixel);
+  margin: 0 0 24px;
+  background: linear-gradient(90deg, #ff4fd8, #fff27a, #36e0ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 16px rgba(255, 79, 216, 0.7));
+}
+.boot-card p { font-size: 16px; line-height: 1.5; }
+.boot-card .small { font-size: 13px; color: rgba(255, 255, 255, 0.65); }
+.boot-card .credit { font: 10px var(--pixel); margin-top: 24px; }
+
+#boot-btn {
+  font: 16px var(--pixel);
+  padding: 18px 28px;
+  margin: 16px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #2a1600;
+  background: var(--yellow);
+  box-shadow: 0 6px 0 #c9a227, 0 0 30px rgba(255, 242, 122, 0.5);
+}
+#boot-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #c9a227; }
+
+@media (max-width: 900px) {
+  #layout { flex-direction: column; }
+  #cam-panel {
+    position: fixed;
+    right: 8px;
+    bottom: 8px;
+    width: 220px;
+    border: 2px solid var(--pink);
+    border-radius: 12px;
+    padding: 8px;
+    opacity: 0.92;
+  }
+  #help, #keys, .prow, .legend { display: none; }
+}

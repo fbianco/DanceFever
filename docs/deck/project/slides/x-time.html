@@ -1,0 +1,37 @@
+<section id="x-time" data-transition="fade" style="background:#f7f3fb;color:#1b0b2e;font-family:'Nunito', Verdana, sans-serif;padding:128px;display:flex;flex-direction:column;gap:16px">
+<div style="position:absolute;left:0;bottom:0;width:1920px;height:20px;background:linear-gradient(90deg, #ff4fd8 0%, #a66bff 25%, #36e0ff 50%, #7cffb2 75%, #fff27a 100%)"></div>
+<p style="font-family:'Press Start 2P', 'Courier New', monospace;font-size:24px;color:#b0127f">STEP 3 · 30 TIMES A SECOND</p>
+<h2 style="font-size:56px;font-weight:800;line-height:1.15;color:#1b0b2e">Tracking in time: predict, then smooth</h2>
+<div style="display:flex;flex-direction:row;gap:64px;align-items:start">
+<div style="width:780px;display:flex;flex-direction:column;gap:20px;background:#fffdfc;padding:36px;border:3px solid #e3d8f0;border-top:8px solid #ff4fd8;border-radius:18px">
+<h3 style="font-size:34px;font-weight:800;color:#1b0b2e">Detect once, then track</h3>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">In video mode the crop of frame t + 1 is predicted from the points of frame t. The detector runs again only when the presence score drops below 0.5.</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;color:#1b0b2e;background:#ece4f6;padding:16px 20px;border-radius:12px">≈ 0.20 G mult-adds per person and frame, 0.63 G when re-detecting</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">Two dancers: up to 2 poses per frame. Each skeleton goes to P1 or P2 by the x of its shoulder centre in the mirror picture; a lone skeleton keeps the seat it was last seen near (2 s memory).</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;color:#1b0b2e;background:#ece4f6;padding:20px 24px;border-radius:14px">x̂_t = x̂_(t−1) + α·(x_t − x̂_(t−1)),  α = 0.55<br>h[n] = α(1 − α)^n,  τ = −Δt / ln(1 − α) ≈ 42 ms</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63">The game’s low-pass filter on every point. Its gain |H(f)| at 30 frames per second:</p>
+<div style="position:relative;width:760px;height:300px">
+<svg aria-label="Gain of the smoothing filter against frequency from 0 to 15 hertz: 1 at 0 hertz, 0.89 at 2 hertz, 0.71 near 4 hertz, 0.43 at 10 hertz, 0.38 at 15 hertz" width="760" height="300" viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="760" height="300" rx="16" fill="#fffdfc"/>
+<line x1="60" y1="260" x2="730" y2="260" stroke="#4a3d63" stroke-width="3"/>
+<line x1="60" y1="260" x2="60" y2="28" stroke="#4a3d63" stroke-width="3"/>
+<line x1="60" y1="40" x2="720" y2="40" stroke="#d9cdea" stroke-width="2" stroke-dasharray="8 8"/>
+<line x1="60" y1="104.5" x2="237.8" y2="104.5" stroke="#b0127f" stroke-width="2" stroke-dasharray="8 8"/>
+<rect x="60" y="28" width="132" height="232" fill="#7cffb2" fill-opacity="0.25"/>
+<polyline fill="none" stroke="#0a6f8c" stroke-width="6" stroke-linejoin="round" points="60.0,40.0 71.0,40.4 82.0,41.8 93.0,43.9 104.0,46.8 115.0,50.4 126.0,54.5 137.0,59.0 148.0,63.8 159.0,68.8 170.0,74.0 181.0,79.2 192.0,84.3 203.0,89.4 214.0,94.4 225.0,99.2 236.0,103.8 247.0,108.3 258.0,112.6 269.0,116.6 280.0,120.5 291.0,124.2 302.0,127.7 313.0,131.0 324.0,134.1 335.0,137.1 346.0,139.9 357.0,142.6 368.0,145.1 379.0,147.4 390.0,149.7 401.0,151.8 412.0,153.7 423.0,155.6 434.0,157.4 445.0,159.0 456.0,160.6 467.0,162.0 478.0,163.4 489.0,164.7 500.0,165.9 511.0,167.0 522.0,168.0 533.0,169.0 544.0,169.9 555.0,170.8 566.0,171.5 577.0,172.3 588.0,172.9 599.0,173.5 610.0,174.1 621.0,174.5 632.0,175.0 643.0,175.3 654.0,175.7 665.0,175.9 676.0,176.2 687.0,176.3 698.0,176.5 709.0,176.5 720.0,176.6"/>
+<circle cx="148" cy="63.8" r="9" fill="#0a6f8c"/>
+<circle cx="237.8" cy="104.5" r="9" fill="#b0127f"/>
+<circle cx="500" cy="165.9" r="9" fill="#0a6f8c"/>
+</svg>
+<p style="position:absolute;left:66px;top:208px;width:130px;font-size:24px;font-weight:700;color:#0a5a2e">moves</p>
+<p style="position:absolute;left:160px;top:30px;width:200px;font-size:24px;font-weight:700;color:#0a6f8c">2 Hz: 0.89</p>
+<p style="position:absolute;left:254px;top:66px;width:260px;font-size:24px;font-weight:700;color:#b0127f">−3 dB at 4 Hz</p>
+<p style="position:absolute;left:440px;top:186px;width:260px;font-size:24px;font-weight:700;color:#0a6f8c">10 Hz jitter: 0.43</p>
+<p style="position:absolute;left:20px;top:262px;width:720px;font-size:24px;color:#4a3d63;text-align:right">0 to 15 Hz (the Nyquist limit at 30 fps)</p>
+</div>
+</div>
+</div>
+<aside>Two things make the tracking work in time. First, MediaPipe’s video mode: once a person is found, the crop for the next frame is predicted from the current landmarks, so the expensive detector is skipped; it only runs again when the landmark network’s presence score drops below the tracking threshold of 0.5. With two dancers the model returns up to two poses, and the game assigns them to player 1 and player 2 by the horizontal position of the shoulder centre, with a short memory so that a lone dancer keeps their seat when the other one steps out. Second, smoothing: each landmark goes through an exponential moving average with alpha 0.55. That is a first-order IIR low-pass filter: its impulse response decays geometrically, with a time constant of about 42 milliseconds at 30 frames per second. Its gain is 0.89 at 2 hertz, the speed of dance moves, crosses minus 3 decibels near 4 hertz, and is down to 0.43 at 10 hertz, where frame-to-frame jitter lives. Only 42 milliseconds of lag, which the judging window easily absorbs.</aside>
+</section>

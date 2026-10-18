@@ -1,0 +1,40 @@
+<section id="x-bones" data-transition="fade" style="background:#f7f3fb;color:#1b0b2e;font-family:'Nunito', Verdana, sans-serif;padding:128px;display:flex;flex-direction:column;gap:16px">
+<div style="position:absolute;left:0;bottom:0;width:1920px;height:20px;background:linear-gradient(90deg, #ff4fd8 0%, #a66bff 25%, #36e0ff 50%, #7cffb2 75%, #fff27a 100%)"></div>
+<p style="font-family:'Press Start 2P', 'Courier New', monospace;font-size:24px;color:#b0127f">STEP 4 · THE ARROWS</p>
+<h2 style="font-size:56px;font-weight:800;line-height:1.15;color:#1b0b2e">A pose is a point on the 9-torus</h2>
+<div style="display:flex;flex-direction:row;gap:64px;align-items:start">
+<div style="width:1040px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:6px;background:#ece4f6;padding:22px 26px;border-radius:14px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.55;color:#1b0b2e">p_k = (1 − x_k, (H/W)·y_k)  <span style="color:#7a6a96">mirror, square units</span></p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.55;color:#1b0b2e">u = (p_j − p_i) / ‖p_j − p_i‖ ∈ S¹  <span style="color:#7a6a96">bone i → j</span></p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.55;color:#1b0b2e">u = (s·sin a, cos a), s = ∓1  <span style="color:#7a6a96">left / right</span></p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.55;color:#b0127f">pose = (u_1, …, u_9) ∈ (S¹)⁹ = T⁹</p>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63"><b><span style="color:#1b0b2e">9 bones:</span></b> both upper arms, forearms, thighs and shins, plus the torso (hip centre → shoulder centre). With the side sign s, a move and its mirror image have the same angles: 0° down, 90° out, 180° up.</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63"><b><span style="color:#1b0b2e">Invariant</span></b> under p ↦ λp + t (λ &gt; 0): size and position do not matter. <b><span style="color:#1b0b2e">Not</span></b> under rotation, on purpose: a tilted arm is another move.</p>
+<p style="font-size:28px;line-height:1.4;color:#4a3d63"><b><span style="color:#1b0b2e">A choreography is a path on T⁹.</span></b> The coach moves each angle along the shorter arc, a(u) = a_i + Δ·(3u² − 2u³), arriving exactly on the beat.</p>
+</div>
+<div style="position:relative;width:560px;height:560px">
+<svg aria-label="Unit circle S1 with a bone direction u at angle a measured from straight down; 0 degrees points down, 90 degrees points outwards to the side, 180 degrees points up" width="560" height="560" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="560" height="560" rx="28" fill="#ece4f6"/>
+<g transform="scale(0.9333)">
+<circle cx="300" cy="300" r="220" fill="none" stroke="#4a3d63" stroke-width="4"/>
+<line x1="300" y1="300" x2="300" y2="520" stroke="#4a3d63" stroke-width="3" stroke-dasharray="10 10"/>
+<line x1="300" y1="300" x2="520" y2="300" stroke="#4a3d63" stroke-width="3" stroke-dasharray="4 10"/>
+<line x1="300" y1="300" x2="300" y2="80" stroke="#4a3d63" stroke-width="3" stroke-dasharray="4 10"/>
+<path d="M300 420 A120 120 0 0 0 403.9 360" fill="none" stroke="#ff9f1c" stroke-width="7"/>
+<line x1="300" y1="300" x2="466.3" y2="396" stroke="#b0127f" stroke-width="12" stroke-linecap="round"/>
+<polygon points="490.5,410 459.3,408.1 473.3,383.9" fill="#b0127f"/>
+<circle cx="300" cy="300" r="16" fill="#1b0b2e"/>
+</g>
+</svg>
+<p style="position:absolute;left:474px;top:396px;width:60px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:34px;font-weight:600;color:#b0127f">u</p>
+<p style="position:absolute;left:316px;top:322px;width:60px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#b85c00">a</p>
+<p style="position:absolute;left:290px;top:486px;width:80px;font-size:24px;font-weight:700;color:#4a3d63">0°</p>
+<p style="position:absolute;left:470px;top:236px;width:80px;font-size:24px;font-weight:700;color:#4a3d63">90°</p>
+<p style="position:absolute;left:290px;top:44px;width:80px;font-size:24px;font-weight:700;color:#4a3d63">180°</p>
+<p style="position:absolute;left:40px;top:40px;width:80px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:30px;font-weight:600;color:#1b0b2e">S¹</p>
+</div>
+</div>
+<aside>From here on, the game’s own code. Each landmark is mirrored, x becomes 1 minus x, so the picture behaves like a mirror, and y is multiplied by the aspect ratio so that both axes use the same unit. A bone is then just the unit vector from one landmark to another: a point on the circle S1. The game uses nine bones, so a pose is a point on the product of nine circles, the 9-torus. Writing each limb as an angle measured from straight down, with a sign for the side, makes a move and its mirror image share the same numbers, which keeps the choreography files short. Because only directions are kept, the representation is invariant under translations and positive scalings of the body: a six-year-old and an adult doing the same move land on the same point. It is deliberately not rotation invariant. A dance is a path on the torus; the coach interpolates each angle along the shorter arc with a smoothstep easing, reaching each key pose exactly on its beat.</aside>
+</section>
